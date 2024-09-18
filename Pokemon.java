@@ -108,14 +108,17 @@ public class Pokemon implements MoreSpeed
     {
        if(someRandomPokemon.getSpeed() > this.getSpeed())
        {
+            System.out.println("this pokemon is faster than you");
             return -1;
        }
        else if(someRandomPokemon.getSpeed() > this.getSpeed())
        {
+            System.out.println("you are faster than this pokemon");
             return 0;
        }
        else
        {
+            System.out.println("You are both tied in speed");
             return 1;
        }
     }
