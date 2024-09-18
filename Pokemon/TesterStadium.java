@@ -19,7 +19,7 @@ public class TesterStadium
         System.out.println("Lucario's HP: " + Steve.getHp());
         System.out.println("Ultra Necrozma's HP: " + GodIncarnate.getHp()); 
 
-        bob.CompareSpeed(GodIncarnate);
+        bob.CompareTo(GodIncarnate);
         
        
         while(bob.getHp() > 0 || jimmy.getHp() > 0 || Steve.getHp() > 0 || GodIncarnate.getHp() > 0)

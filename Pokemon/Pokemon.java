@@ -1,5 +1,5 @@
 // 
-public class Pokemon implements MoreSpeed
+public class Pokemon implements CompareTo
 {
     private int hp;
     private int atk;
@@ -102,7 +102,7 @@ public class Pokemon implements MoreSpeed
             someRandomPokemon.setHp(0);
        }
     }
-
+    /* 
     @Override
     public int CompareSpeed(Pokemon someRandomPokemon) 
     {
@@ -120,7 +120,43 @@ public class Pokemon implements MoreSpeed
        {
             System.out.println("You are both tied in speed");
             return 1;
-       }
+        }   
+    }
+        */
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        Pokemon temp = (Pokemon) obj;
+        if(this.getAtk() == temp.getAtk() && this.getHp() == temp.getHp()) //should put in all variables
+        {
+            return true;
+        }
+        return false;
+    }
+    // Ideally how CompareTO is written
+    @Override
+    public int CompareTo(Object obj)
+    {
+        Pokemon temp;
+
+        if(obj instanceof Pokemon)
+        {
+            temp = (Pokemon) obj;
+        }
+        else
+        {
+            return -10000;
+        }
+        if(this.getSpeed() > temp.getSpeed())
+        {
+            return 1;
+        }
+        else if(this.getSpeed() == temp.getSpeed())
+        {
+            return 0;
+        }
+        return 0;
     }
 
 
