@@ -2,70 +2,74 @@ import java.util.Arrays;
 
 public class JaylenContainer 
 {
-    int[] data = new int[10];
+    int[] data;
     int CurrentPosition;
+    boolean containes;
 
     public void BiggerArray()
     {
-        int[] temp = new int[data.length * 2];
-
-        for(int i = 0; i > data.length; i++)
-        {
-            temp[i] = data[i];
-        }
-
-        data = temp;
+        data = Arrays.copyOf(data, data.length + 1);
     }
 
     public void addValue(int CurrentPosition, int Value)
     {
-        data[CurrentPosition] = Value;
-
-        for(int i = CurrentPosition + 1; i < data.length; i++)
+        if(data.length <= CurrentPosition)
         {
-            if(data.length < i)
-            {
-                BiggerArray();
-            }
+            BiggerArray();
+            data[CurrentPosition] = Value;
+        }
+        else
+        {
+            data[CurrentPosition] = Value;
+        }
 
+        for(int i = CurrentPosition; i < data.length - 1; i++)
+        {
             data[i] = data[i + 1];
         }
-        /* 
-        for(int i = 0; i > data.length; i++)
-        {
-            CurrentPosition++;
-            
-            if(data[i] == 0)
-            {
-                if(data.length < i)
-                {
-                    BiggerArray();
-                }
-
-                data[i] = Value;
-            }
-            else 
-            {
-                break;
-            }
-        }
-            */
     }
-    
-    public void RemoveValue(int CurrentPosition, int value)
+
+    public void addFirst(int value)
+    {
+        data[0] = value;
+        
+        for(int i = 0; i < data.length; i++)
+        {
+            data[i] = data[i + 1];
+        }
+    }
+   
+    public void RemoveValue(int CurrentPosition)
     {
         data[CurrentPosition] = data[0];
-        /*
-        for(int i = 0; i > data.length; i++)
-        {
-            CurrentPosition++;
 
-            if(data[i] == value)
-            {
-                data[i] = 0;
-            }
+        for(int i = CurrentPosition; i < data.length; i++)
+        {
+            data[i] = data[i - 1];
         }
-            */
+    }
+
+    public void removeFirst()
+    {
+        data[0] = 0;
+    }
+
+    public void removeLast()
+    {
+        data[data.length - 1] = 0;
+    }
+
+    public void Clear()
+    {
+        for(int i = 0; i < data.length; i++)
+        {
+            data[i] = 0;
+        }
+    }
+
+    public void replaceValue(int CurrentPosition, int value)
+    {
+        data[CurrentPosition] = value;
     }
 
     public void ClearValues()
@@ -74,11 +78,6 @@ public class JaylenContainer
         {
             data[i] = 0;
         }
-    }
-
-    public void removeFirst()
-    {
-
     }
 
     public int getValue(int index)
@@ -102,5 +101,22 @@ public class JaylenContainer
     public String ToString()
     {
         return Arrays.toString(data);
+    }
+
+    public boolean Containes(int value, boolean containes)
+    {
+        for(int i = 0; i < data.length; i++)
+        {
+            if(i == value)
+            {
+                containes = true;
+                break;
+            }
+            else
+            {
+                containes = false;
+            }
+        }
+        return containes;
     }
 }

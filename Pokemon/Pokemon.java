@@ -1,5 +1,9 @@
-// 
-public class Pokemon implements CompareTo
+/**
+ * Author: Jaylen Knight
+ * 
+ * Version: 1.0
+ */
+public abstract class Pokemon implements CompareTo
 {
     private int hp;
     private int atk;

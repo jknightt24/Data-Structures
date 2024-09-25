@@ -1,7 +1,6 @@
 public class Pikachu extends Pokemon
-
 {
-    //stats here
+    
     public Pikachu()
     {
         super(75, 55, 30, 50, 40, 90, "");

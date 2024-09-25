@@ -9,8 +9,6 @@ public class TesterStadium
         Lucario Steve = new Lucario();
         UltraNecrozma GodIncarnate = new UltraNecrozma();
 
-        
-
         System.out.println("Battle music initilized");
         System.out.println("Pikachu vs Charizard vs Lucario vs Ultra Necrozma");
 
