@@ -8,8 +8,14 @@ public class Pikachu extends Pokemon
 
     public void Thunderbolt(Pokemon someRandomPokemon)
     {
-       DamageCalcSpAtk(someRandomPokemon);
-       
+        if(true)
+        {
+       DamageCalcSpAtk(someRandomPokemon); 
+        }
+        else
+        {
+            
+        }
     }
 
     public void Spark(Pokemon someRandomPokemon)

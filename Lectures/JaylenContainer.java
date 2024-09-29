@@ -2,14 +2,17 @@ import java.util.Arrays;
 
 public class JaylenContainer 
 {
-    int[] data;
+    int[] data = new int[10];
     int CurrentPosition;
     boolean containes;
+    int numbers;
 
     public void BiggerArray()
     {
         data = Arrays.copyOf(data, data.length + 1);
     }
+
+    
 
     public void addValue(int CurrentPosition, int Value)
     {
@@ -98,9 +101,15 @@ public class JaylenContainer
         return count;
     }
 
-    public String ToString()
+    @Override
+    public String toString()
     {
-        return Arrays.toString(data);
+        String result = "";
+        for(int i = 0; i < data.length; i++)
+        {
+            result += data[i] + " ";
+        }
+        return result;
     }
 
     public boolean Containes(int value, boolean containes)
