@@ -4,16 +4,13 @@ public class JaylenContainerTester
 {
     public static void main(String[] args)
     {
-        JaylenContainer data = new JaylenContainer();   
+        JaylenContainer<Integer> data = new JaylenContainer<Integer>();   
 
-        System.out.println(data.toString());
-        System.out.println(data.Size());
+        System.out.println(data);
+        System.out.println(data.size());
+        
+        data.add(5, 5);
 
-        for(int i = 0; i <= data.Size() - 1; i++)
-        {
-            data.addValue(i, new Random().nextInt(100));
-        }
-
-        System.out.println(data.toString());
+        System.out.println(data);
     }
 }

@@ -2,39 +2,52 @@ import java.util.Arrays;
 
 public class JaylenContainer <T>
 {
-    int[] data = new int[10];
-    int CurrentPosition;
-    boolean containes;
-    int numbers;
-
-    public void BiggerArray()
+    private T type;
+    private int[] data = new int[1000];
+    private int size;
+    private boolean containes;
+    private int numbers;
+    
+    public T getType()
     {
-        data = Arrays.copyOf(data, data.length + 1);
+        return type;
     }
 
-    public void addValue(int CurrentPosition, int value)
+    public void biggerArray()
     {
-        for(int i = CurrentPosition; i < data.length; i++)
+        int[] temp = new int[data.length * 2];
+
+        for(int i = 0; i < data.length; i++)
         {
-            if(data[i] == data[data.length - 1])
-            {
-                BiggerArray();
-                data[i] = data[i + 1];
-                break;
-            }
-            else
-            {
-            data[i] = data[i + 1];
-            }
+            temp[i] = data[i];
         }
 
-        data[CurrentPosition] = value;
+        data = temp;
+    }
+
+    
+    public void add(int currentPosition, int value)
+    {
+        size = data.length;
+
+        if(data[currentPosition] <= data[data.length - 1])
+        {
+            biggerArray();
+            size = data.length;
+        }
+        
+        for(int i = currentPosition; i < size - 1; i++)
+        {
+            data[i] = data[i + 1];
+        }
+
+        data[currentPosition] = value;
       
     }
 
     public void addFirst(int value)
     {
-        BiggerArray();
+        biggerArray();
 
         for(int i = 0; i < data.length - 1; i++)
         {
@@ -44,7 +57,7 @@ public class JaylenContainer <T>
         data[0] = value;
     }
    
-    public void RemoveValue(int CurrentPosition)
+    public void removeValue(int CurrentPosition)
     {
         data[CurrentPosition] = 0;
 
@@ -64,7 +77,7 @@ public class JaylenContainer <T>
         data[data.length - 1] = 0;
     }
 
-    public void Clear()
+    public void clear()
     {
         for(int i = 0; i < data.length; i++)
         {
@@ -72,12 +85,12 @@ public class JaylenContainer <T>
         }
     }
 
-    public void replaceValue(int CurrentPosition, int value)
+    public void replaceValue(int currentPosition, int value)
     {
-        data[CurrentPosition] = value;
+        data[currentPosition] = value;
     }
 
-    public void ClearValues()
+    public void clearValues()
     {
         for(int i = 0; i > data.length; i++)
         {
@@ -90,14 +103,15 @@ public class JaylenContainer <T>
         return data[index];
     }
 
-    public int Size()
+    public int size()
     {
-        int count = 0
-        ;
+        int count = 0;
+        
         for(int i = 0; i <= data.length; i++)
         {
             count++;
         }
+        
         return count;
     }
 
@@ -112,7 +126,7 @@ public class JaylenContainer <T>
         return result;
     }
 
-    public boolean Containes(int value, boolean containes)
+    public boolean containes(int value, boolean containes)
     {
         for(int i = 0; i < data.length; i++)
         {
