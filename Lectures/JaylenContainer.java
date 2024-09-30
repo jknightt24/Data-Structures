@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class JaylenContainer 
+public class JaylenContainer <T>
 {
     int[] data = new int[10];
     int CurrentPosition;
