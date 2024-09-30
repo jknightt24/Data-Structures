@@ -1,14 +1,19 @@
+import java.util.Random;
+
 public class JaylenContainerTester 
 {
     public static void main(String[] args)
     {
         JaylenContainer data = new JaylenContainer();   
 
-        for(int i = 0; i < 11; i++)
+        System.out.println(data.toString());
+        System.out.println(data.Size());
+
+        for(int i = 0; i <= data.Size() - 1; i++)
         {
-            data.addValue(i, 5);
+            data.addValue(i, new Random().nextInt(100));
         }
 
-        data.toString();
+        System.out.println(data.toString());
     }
 }

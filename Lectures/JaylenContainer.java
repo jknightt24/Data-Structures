@@ -12,39 +12,41 @@ public class JaylenContainer
         data = Arrays.copyOf(data, data.length + 1);
     }
 
-    
-
-    public void addValue(int CurrentPosition, int Value)
+    public void addValue(int CurrentPosition, int value)
     {
-        if(data.length <= CurrentPosition)
+        for(int i = CurrentPosition; i < data.length; i++)
         {
-            BiggerArray();
-            data[CurrentPosition] = Value;
-        }
-        else
-        {
-            data[CurrentPosition] = Value;
+            if(data[i] == data[data.length - 1])
+            {
+                BiggerArray();
+                data[i] = data[i + 1];
+                break;
+            }
+            else
+            {
+            data[i] = data[i + 1];
+            }
         }
 
-        for(int i = CurrentPosition; i < data.length - 1; i++)
-        {
-            data[i] = data[i + 1];
-        }
+        data[CurrentPosition] = value;
+      
     }
 
     public void addFirst(int value)
     {
-        data[0] = value;
-        
-        for(int i = 0; i < data.length; i++)
+        BiggerArray();
+
+        for(int i = 0; i < data.length - 1; i++)
         {
             data[i] = data[i + 1];
         }
+
+        data[0] = value;
     }
    
     public void RemoveValue(int CurrentPosition)
     {
-        data[CurrentPosition] = data[0];
+        data[CurrentPosition] = 0;
 
         for(int i = CurrentPosition; i < data.length; i++)
         {
@@ -88,15 +90,13 @@ public class JaylenContainer
         return data[index];
     }
 
-    public int ContainerSize()
+    public int Size()
     {
-        int count = 0;
-        for(int i = 0; i > data.length; i++)
+        int count = 0
+        ;
+        for(int i = 0; i <= data.length; i++)
         {
-            if(data[i] != 0)
-            {
-                count++;
-            }
+            count++;
         }
         return count;
     }
