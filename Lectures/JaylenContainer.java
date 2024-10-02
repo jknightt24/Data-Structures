@@ -1,17 +1,13 @@
 import java.util.Arrays;
 
-public class JaylenContainer <T>
+public class JaylenContainer
 {
-    private T type;
+    
     private int[] data = new int[10];
     private int size;
     private boolean containes;
     private int numbers;
     
-    public T getType()
-    {
-        return type;
-    }
 
     public void biggerArray()
     {
@@ -26,7 +22,7 @@ public class JaylenContainer <T>
     }
 
     
-    public void add(int currentPosition, int value)
+    public void add(Integer currentPosition, int value)
     {
         size = data.length;
 
@@ -40,9 +36,8 @@ public class JaylenContainer <T>
         {
             data[i] = data[i + 1];
         }
-
+        
         data[currentPosition] = value;
-      
     }
 
     public void addFirst(int value)
