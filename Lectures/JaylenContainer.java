@@ -3,7 +3,7 @@ import java.util.Arrays;
 public class JaylenContainer <T>
 {
     private T type;
-    private int[] data = new int[1000];
+    private int[] data = new int[10];
     private int size;
     private boolean containes;
     private int numbers;
@@ -30,7 +30,7 @@ public class JaylenContainer <T>
     {
         size = data.length;
 
-        if(data[currentPosition] <= data[data.length - 1])
+        while(currentPosition > data[data.length - 1] && size < currentPosition)
         {
             biggerArray();
             size = data.length;
@@ -118,12 +118,16 @@ public class JaylenContainer <T>
     @Override
     public String toString()
     {
-        String result = "";
-        for(int i = 0; i < data.length; i++)
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("");
+
+        for(int i = 0; i < data.length - 1; i++)
         {
-            result += data[i] + " ";
+            sb.append(data[i] + " ");
         }
-        return result;
+
+        return sb.toString();
     }
 
     public boolean containes(int value, boolean containes)
