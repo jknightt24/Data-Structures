@@ -3,7 +3,8 @@ public class JaylenDaisyChainConnector <E>
 {
     private box<E> head = null;
     private box<E> tail = null;
-    private box<E>[] daisyChain = new box[10];
+    //private box<E>[] daisyChain = new box[10];
+    private ArrayList<box<E>> daisyChain = new ArrayList<box<E>>();
     private int size = 0;
 
     public void daisyChain()
@@ -42,7 +43,16 @@ public class JaylenDaisyChainConnector <E>
 
     public void addFront(E box)
     {
-        head = new box<E>(box, head);
+        if(head == null)
+        {
+            head = new box<>(box);
+        }
+        else
+        {
+            box<E> temp = new box<>(box);
+            temp.setNextBox(head);
+            head = temp;
+        }
 
         if(tail == null)
         {
@@ -54,6 +64,8 @@ public class JaylenDaisyChainConnector <E>
 
     public void addEnd(E box)
     {
+        size++;
+
         box<E> temp = new box<>(box);
 
         if(head == null)
@@ -64,8 +76,6 @@ public class JaylenDaisyChainConnector <E>
         {
             tail.setNextBox(temp);
         }
-
-        size++;
     }
 
     private void addAfter(E box, box<E> boxafter)
@@ -125,7 +135,7 @@ public class JaylenDaisyChainConnector <E>
         box<E> temp2 = null;
 
         //iterates to last box and makes temp2 second to last box
-        while(temp.getNextBox() != null)
+        if(temp.getNextBox() != null && temp != null)
         {
             temp2 = temp;
             temp = temp.getNextBox();
@@ -200,6 +210,41 @@ public class JaylenDaisyChainConnector <E>
         size = 0;
 
         return (E) temp.getChain();
+    }
+
+    public boolean contains(E box)
+    {
+        box<E> temp = head;
+
+        while(temp != null)
+        {
+            if(temp.getChain().equals(box))
+            {
+                return true;
+            }
+
+            temp = temp.getNextBox();
+        }
+
+        return false;
+    }
+
+    public int size()
+    {
+        return size;
+    }
+
+    public boolean isEmpty()
+    {
+        if(size == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
     }
 
     @Override

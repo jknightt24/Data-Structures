@@ -6,7 +6,7 @@ public class Zombie extends Monster
     }
 
     @Override
-    public void Interact()
+    public void Interact(Player player)
     {
         System.out.println("You have encountered a zombie.");
     }

@@ -1,18 +1,19 @@
-public class ExitRoom implements RoomBehavior
+public class EmptyRoom implements RoomBehavior, InteractableObject
 {
     public void onEnter()
     {
-        System.out.println("You have entered the exit room.");
+        System.out.println("You have entered an empty room. its empty.");
     }
 
+    public void Interact(Player player)
+    {
+        System.out.println("You have found nothing.");
+    }
+
+    @Override
     public String getRoomName()
     {
-        return "Exit Room";
-    }
-
-    public void Interact()
-    {
-        System.out.println("You have exited this floor of the dungeon ");
+        return "Empty Room";
     }
 
     @Override
@@ -24,7 +25,7 @@ public class ExitRoom implements RoomBehavior
     @Override
     public boolean isExitRoom()
     {
-        return true;
+        return false;
     }
 
     @Override
@@ -42,7 +43,6 @@ public class ExitRoom implements RoomBehavior
     @Override
     public boolean isEmptyRoom()
     {
-        return false;
+        return true;
     }
-    
 }

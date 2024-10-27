@@ -6,11 +6,12 @@ public class TreasureRoom implements RoomBehavior, InteractableObject
         System.out.println("You have entered the treasure room.");
     }
 
-    public void Interact()
+    public void Interact(Player player)
     {
         System.out.println("You have found the treasure.");
     }
 
+    @Override
     public String getRoomName()
     {
         return "Treasure Room";
@@ -36,6 +37,12 @@ public class TreasureRoom implements RoomBehavior, InteractableObject
 
     @Override
     public boolean isTrapRoom()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isEmptyRoom()
     {
         return false;
     }

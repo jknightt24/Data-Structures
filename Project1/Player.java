@@ -70,6 +70,15 @@ public class Player
         return maxHp;
     }
 
+    public void printStats()
+    {
+        System.out.println("Player Stats: ");
+        System.out.println("Attack: " + attack);
+        System.out.println("HP: " + hp);
+        System.out.println("Defense: " + defense);
+        System.out.println("Speed: " + speed);
+    }
+
     public void PlayerBattleCalculation(Monster monster)
     {
         resultLife = monster.getHp() - this.getAttack();

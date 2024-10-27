@@ -1,4 +1,4 @@
-public class box<E> 
+public class box<E> extends JaylenDaisyChainConnector<E>
 {
     // stores value
     E box;

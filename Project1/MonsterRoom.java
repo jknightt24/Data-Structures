@@ -6,7 +6,7 @@ public class MonsterRoom implements RoomBehavior, InteractableObject
         System.out.println("You have entered the monster room.");
     } 
     
-    public void Interact()
+    public void Interact(Player player)
     {
         System.out.println("You have encountered a monster.");
     }
@@ -40,4 +40,10 @@ public class MonsterRoom implements RoomBehavior, InteractableObject
     {
         return false;
     }
+
+    @Override
+    public boolean isEmptyRoom()
+    {
+        return false;
+    }   
 }

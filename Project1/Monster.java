@@ -31,8 +31,18 @@ public abstract class Monster implements InteractableObject
     public int getAttack()
     {
         Random rng = new Random();
+        int damage = rng.nextInt(attack / 2, attack);
 
-        return rng.nextInt(attack / 2, attack);
+        if(damage < 1)
+        {
+            return 1;
+        }
+        else
+        {
+            return damage;
+        }
+
+        
     }
 
     public void setAttack(int inputAttack)
@@ -70,6 +80,14 @@ public abstract class Monster implements InteractableObject
         speed = inputSpeed;
     }
 
+    public void setFloorModifier(int floor)
+    {
+        attack = attack + (floor * 2);
+        hp = hp + (floor * 2);
+        defense = defense + (floor * 2);
+        speed = speed + (floor * 2);
+    }
+
     public void monsterBattleCalculation(Player player)
     {
         resultLife = player.getHp() - this.getAttack();
@@ -82,12 +100,29 @@ public abstract class Monster implements InteractableObject
         player.setHp(resultLife);
     }
 
+    public void Battle(Player player)
+    {
+        this.monsterBattleCalculation(player);
+
+        System.out.println("The monster attacked you for " + this.getAttack() + " damage!");
+
+        if(player.getHp() == 0)
+        {
+            System.out.println("You have been defeated by the monster.");
+        }
+        else
+        {
+            System.out.println("You have " + player.getHp() + " hp left.");
+        }
+    }
+
     public void monsterFirstBattle(Player player)
     {
         this.monsterBattleCalculation(player);
     }
 
-    public void Interact()
+    @Override
+    public void Interact(Player player)
     {
         System.out.println("You have encountered a monster!");
     }

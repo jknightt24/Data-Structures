@@ -220,6 +220,11 @@ public class JaylenDaisyChainConnector <E>
         return false;
     }
 
+    public void makeCircular()
+    {
+        tail.setNextBox(head);
+    }
+
     public int size()
     {
         return size;

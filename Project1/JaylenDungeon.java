@@ -1,46 +1,44 @@
 
 import java.util.Random;
 import java.util.Scanner;
-public class JaylenDungeon <E> extends Room<E> implements InteractableObject
+public class JaylenDungeon <E> extends JaylenDaisyChainConnector<E>
 {
+    public Player player = new Player();
     private Room<E> head = null;
     private Room<E> tail = null;
     private int floor = 1;
     private int location;
     private int roomType;
+    private int randomContents;
     private Room<E>[] dungeonFloor = new Room[11];
 
     Random rng = new Random();
-    Random rng2 = new Random();
     int numRooms = rng.nextInt(5, 10);
-
-    public Player player = new Player();
-
     Room<E> dungeon;
 
     public JaylenDungeon() 
     {
-        super(null, null);
         head = null;
         tail = null;   
         this.location = 0; 
     }
 
-    public void setupFloor(int floor)
+    public void setupFloor()
     {
         E room = null;
+        RoomBehavior behavior;
 
         for(int i = 0; i < numRooms; i++)
         {            
-            roomType = rng2.nextInt(1, 100);
-            RoomBehavior behavior;
-
-            if(roomType <= 25)
+            roomType = rng.nextInt(1, 100);
+        
+            if(roomType <= 35)
             {
                 behavior = new TreasureRoom();
                 dungeonFloor[i] = new Room<E>(room, behavior);
+                
             }
-            else if(roomType >= 26 && roomType <= 70)
+            else if(roomType >= 36 && roomType <= 75)
             {
                 behavior = new MonsterRoom();
                 dungeonFloor[i] = new Room<E>(room, behavior);
@@ -50,25 +48,23 @@ public class JaylenDungeon <E> extends Room<E> implements InteractableObject
                 behavior = new TrapRoom();
                 dungeonFloor[i] = new Room<E>(room, behavior);
             }
-
-            //Room<E> temp = new Room<E>(room, behavior);
         }
 
         behavior = new ExitRoom();
-        numRooms++;
         dungeonFloor[numRooms] = new Room<E>(room, behavior);
 
         for(int i = 0; i < numRooms; i++)
         {
-            if(head == null)
+            if(i == 0)
             {
                 head = dungeonFloor[i];
+                tail = dungeonFloor[i];
             }
             else
             {
                 tail.setNextRoom(dungeonFloor[i]);
+                tail = dungeonFloor[i];
             }
-            tail = dungeonFloor[i];
         }
     }
 
@@ -86,6 +82,10 @@ public class JaylenDungeon <E> extends Room<E> implements InteractableObject
         if(location < numRooms)
         {
             location++;
+        }
+        else
+        {
+            location = 0;
         }
     }
 
@@ -120,10 +120,11 @@ public class JaylenDungeon <E> extends Room<E> implements InteractableObject
         String choice;
 
         System.out.println("You are now exploring the dungeon.");
-        System.out.println("You are currently on floor " + floor + " and in room " + location + ".");
+        System.out.println("You are currently on floor " + floor + " and in room " + location + " aka the starting room.");
         System.out.println("You can move forward or move backward.");
         System.out.println("Once you find the exit room, you can go to the next floor by typing exit.");
         System.out.println("type forward to move forward, type back to move backward ");
+        System.out.println("You can also check your stats at anytime you are not dealing with a room by typing stats.");
 
         choice = input.nextLine();
 
@@ -138,6 +139,10 @@ public class JaylenDungeon <E> extends Room<E> implements InteractableObject
             {
                 moveBackward();
                 Interact();
+            }
+            else if(choice.equals("stats"))
+            {
+                player.printStats();
             }
             else
             {
@@ -157,13 +162,26 @@ public class JaylenDungeon <E> extends Room<E> implements InteractableObject
         }
 
         System.out.println("You have exited this floor of the dungeon.");
-        floor++;
-        input.close();
+        nextFloor();
+        setupFloor();
+        startExploring();
     }
 
     public void Interact()
     {
         RoomBehavior currentRoom = dungeonFloor[location].getBehavior();
+        RoomBehavior emptyRoom = new EmptyRoom();
+
+        if(currentRoom != null)
+        {
+            currentRoom = dungeonFloor[location].getBehavior();
+        }
+        else
+        {
+            location++;
+            currentRoom = dungeonFloor[location].getBehavior();
+        }
+        
         Scanner input = new Scanner(System.in);
 
 
@@ -176,7 +194,8 @@ public class JaylenDungeon <E> extends Room<E> implements InteractableObject
 
             if(input.nextLine().equals("yes"))
             {
-                treasure.Interact();
+                treasure.Interact(player);
+                dungeonFloor[location].setBehavior(emptyRoom);
             }
             else if(input.nextLine().equals("no"))
             {
@@ -185,8 +204,8 @@ public class JaylenDungeon <E> extends Room<E> implements InteractableObject
         }
         else if(currentRoom.isMonsterRoom())
         {
-            Skeleton monster = new Skeleton();
-            monster.Interact();
+            Monster monster = generateRandomMonster(floor);
+            monster.Interact(player);
 
             System.out.println("Would you like to fight the " + monster.getMonsterName() + "?" + " Type fight to fight or run to run back to the previous room.");
             System.out.println("Be aware that running away will cause you to recieve 1 hit worth of damage from the " + monster.getMonsterName() + ".");
@@ -194,6 +213,7 @@ public class JaylenDungeon <E> extends Room<E> implements InteractableObject
             if(input.nextLine().equals("fight"))
             {
                 player.Battle(monster);
+                dungeonFloor[location].setBehavior(emptyRoom);
             }
             else if(input.nextLine().equals("run"))
             {
@@ -202,32 +222,47 @@ public class JaylenDungeon <E> extends Room<E> implements InteractableObject
                 monster.monsterBattleCalculation(player);
                 moveBackward();
             }
-
-           
         }
         else if(currentRoom.isTrapRoom())
         {
-            System.out.println("You have triggered a trap.");
+            TrapRoom trap = new TrapRoom();
+            trap.Interact(player);
         }
+        else
+        {
+            System.out.println("You have entered an empty room.");
+        }
+
+        input.close();
     }
 
+    
+    /** 
+     * @return Treasure
+     */
     public Treasure generateRandomTreasure()
     {
-        int randomTreasure = (int)(Math.random() * 2);
-        if(randomTreasure == 0)
+        randomContents = rng.nextInt(1, 3);
+        if(randomContents == 1)
         {
             return new Potion();
+        }
+        else if(randomContents == 2)
+        {
+            return new ShinySword();
         }
         else
         {
             return new MaxHpPotion();
         }
+
+        
     }
 
-    public Monster generateRandomMonster()
+    public Monster generateRandomMonster(int floor)
     {
-        int randomMonster = (int)(Math.random() * 2);
-        if(randomMonster == 0)
+        randomContents = rng.nextInt(1, 2);
+        if(randomContents == 0)
         {
             return new Skeleton();
         }

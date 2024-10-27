@@ -1,3 +1,4 @@
+
 public class TrapRoom implements RoomBehavior, InteractableObject
 {
     public void onEnter()
@@ -5,11 +6,12 @@ public class TrapRoom implements RoomBehavior, InteractableObject
         System.out.println("You have entered the trap room.");
     }
     
-    public void Interact()
+    public void Interact(Player player)
     {
         System.out.println("You have triggered a trap.");
     }
 
+    @Override
     public String getRoomName()
     {
         return "Trap Room";
@@ -37,5 +39,11 @@ public class TrapRoom implements RoomBehavior, InteractableObject
     public boolean isTrapRoom()
     {
         return true;
+    }
+
+    @Override
+    public boolean isEmptyRoom()
+    {
+        return false;
     }
 }

@@ -13,4 +13,9 @@ public class JaylenUniversalBox <T>
     {
         return thing1;
     }
+
+    public void setT(T userInputThing)
+    {
+        thing1 = userInputThing;
+    }
 }

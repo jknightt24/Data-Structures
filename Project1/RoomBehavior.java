@@ -11,4 +11,6 @@ public interface RoomBehavior
     public boolean isTreasureRoom();
 
     public boolean isTrapRoom();
+
+    public boolean isEmptyRoom();
 }

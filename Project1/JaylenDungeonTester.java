@@ -4,7 +4,7 @@ public class JaylenDungeonTester
     {
         JaylenDungeon<String> dungeon = new JaylenDungeon<>();
 
-        dungeon.setupFloor(1);
+        dungeon.setupFloor();
         System.out.println(dungeon);
         dungeon.startExploring();
     }

@@ -14,18 +14,17 @@ public abstract class Treasure implements InteractableObject
 
         if(this instanceof Potion)
         {
-            this.Interact();
-            player.setHp(player.getHp() + 10);
-            if(player.getHp() > player.getMaxHp())
-            {
-                player.setHp(player.getMaxHp());
-            }
+            this.Interact(player);
+            
         }
         else if(this instanceof MaxHpPotion)
         {
-            this.Interact();
-            player.setMaxHp(player.getMaxHp() + 5);
-            player.setHp(player.getHp() + 5);
+            this.Interact(player);
+            
+        }
+        else if(this instanceof ShinySword)
+        {
+            this.Interact(player);
         }
     }
 

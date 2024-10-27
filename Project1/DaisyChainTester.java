@@ -1,6 +1,5 @@
 public class DaisyChainTester 
-{
-    
+{ 
     public static void main(String[] args)
     {
         JaylenDaisyChainConnector<String> chain = new JaylenDaisyChainConnector<String>();

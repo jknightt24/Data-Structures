@@ -2,6 +2,7 @@
 public class Room<E> extends JaylenDaisyChainConnector<E> implements InteractableObject
 {
     E Room;
+    Room<E> previousRoom;
     Room<E> nextRoom;
     RoomBehavior behavior;
 
@@ -9,6 +10,7 @@ public class Room<E> extends JaylenDaisyChainConnector<E> implements Interactabl
     {
         this.Room = room;
         this.nextRoom = null;
+        this.previousRoom = null;
         this.behavior = typeRoom;
     }
     
@@ -32,6 +34,16 @@ public class Room<E> extends JaylenDaisyChainConnector<E> implements Interactabl
         this.nextRoom = nextRoom;
     }
 
+    public Room<E> getPreviousRoom()
+    {
+        return previousRoom;
+    }  
+
+    public void setPreviousRoom(Room<E> previousRoom)
+    {
+        this.previousRoom = previousRoom;
+    }
+
     public void enterRoom()
     {
         if(behavior != null)
@@ -40,7 +52,7 @@ public class Room<E> extends JaylenDaisyChainConnector<E> implements Interactabl
         }
     }
 
-    public void Interact()
+    public void Interact(Player player)
     {
         System.out.println("You have entered the dungeon.");
     }
@@ -79,5 +91,11 @@ public class Room<E> extends JaylenDaisyChainConnector<E> implements Interactabl
     {
         return behavior.isTrapRoom();
     }
+
+    public boolean isEmptyRoom()
+    {
+        return behavior.isEmptyRoom();
+    }
+
 
 }
