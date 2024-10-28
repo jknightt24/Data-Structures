@@ -5,7 +5,6 @@ public class JaylenDungeonTester
         JaylenDungeon<String> dungeon = new JaylenDungeon<>();
 
         dungeon.setupFloor();
-        System.out.println(dungeon);
         dungeon.startExploring();
     }
 }

@@ -20,9 +20,12 @@ public class JaylenDungeon <E> extends JaylenDaisyChainConnector<E>
     {
         head = null;
         tail = null;   
-        this.location = 0; 
+        this.location = 1; 
     }
 
+    /**
+     * Sets up the floor of the dungeon with random rooms connected to each other.
+     */
     public void setupFloor()
     {
         E room = null;
@@ -57,17 +60,27 @@ public class JaylenDungeon <E> extends JaylenDaisyChainConnector<E>
         {
             if(i == 0)
             {
-                head = dungeonFloor[i];
-                tail = dungeonFloor[i];
+                head = dungeonFloor[1];
+                dungeonFloor[i].setNextRoom(dungeonFloor[i + 1]);
+                tail = dungeonFloor[numRooms];
+            }
+            else if(i == numRooms - 1)
+            {
+                dungeonFloor[i].setNextRoom(dungeonFloor[1]);
+                dungeonFloor[i].setPreviousRoom(dungeonFloor[i - 1]);
             }
             else
             {
                 tail.setNextRoom(dungeonFloor[i]);
+                dungeonFloor[i].setPreviousRoom(tail);
                 tail = dungeonFloor[i];
             }
         }
     }
 
+    /**
+     * Moves the player to the next floor of the dungeon.
+     */
     public void nextFloor()
     {
         if(location == numRooms)
@@ -77,6 +90,9 @@ public class JaylenDungeon <E> extends JaylenDaisyChainConnector<E>
         }
     }
 
+    /**
+     * Moves the player forward in the dungeon.
+     */
     public void moveForward()
     {
         if(location < numRooms)
@@ -85,13 +101,16 @@ public class JaylenDungeon <E> extends JaylenDaisyChainConnector<E>
         }
         else
         {
-            location = 0;
+            location = 1;
         }
     }
 
+    /**
+     * Moves the player backward in the dungeon.
+     */
     public void moveBackward()
     {
-        if(location > 0)
+        if(location > 1)
         {
             location--;
         }
@@ -101,19 +120,9 @@ public class JaylenDungeon <E> extends JaylenDaisyChainConnector<E>
         }
     }
 
-    public void enterDungeon()
-    {
-        Room<E> temp = head;
-
-        while(temp != null)
-        {
-            temp.enterRoom();
-            temp = temp.getNextRoom();
-        }
-
-        System.out.println("You have entered the dungeon.");
-    }
-
+    /**
+     * Starts of the constructed dungeon and allows the player to explore said dungeon.
+     */
     public void startExploring()
     {
         Scanner input = new Scanner(System.in);
@@ -127,13 +136,15 @@ public class JaylenDungeon <E> extends JaylenDaisyChainConnector<E>
         System.out.println("You can also check your stats at anytime you are not dealing with a room by typing stats.");
 
         choice = input.nextLine();
+        
 
-        while(!choice.equals("exit"))
+        while(!choice.equals("exit") && player.getHp() > 0)
         {
             if(choice.equals("forward"))
             {
                 moveForward();
-                Interact();
+                Interact();   
+
             }
             else if(choice.equals("backward"))
             {
@@ -147,9 +158,11 @@ public class JaylenDungeon <E> extends JaylenDaisyChainConnector<E>
             else
             {
                 System.out.println("Invalid choice. Please try again.");
+                choice = input.nextLine();
             }
 
             System.out.println("You are now in room " + location + ".");
+            showSurroundingRooms();
             
             if(location == numRooms)
             {
@@ -161,12 +174,25 @@ public class JaylenDungeon <E> extends JaylenDaisyChainConnector<E>
             choice = input.nextLine();
         }
 
+        if(player.getHp() == 0)
+        {
+            System.out.println("You have been defeated by the monsters in the dungeon.");
+            System.out.println("You have failed to complete the dungeon.");
+        }
+
         System.out.println("You have exited this floor of the dungeon.");
         nextFloor();
         setupFloor();
         startExploring();
+        input.close();
     }
 
+    /**
+     * Causes the player to interact with the room they are currently in.
+     * upon entering a room, the method will check if the room is a treasure room, monster room, trap room, or empty room.
+     * if the room is anything but an empty room, this will generate a random interaction for the player to deal with
+     * based on the type of room the player is currently in.
+     */
     public void Interact()
     {
         RoomBehavior currentRoom = dungeonFloor[location].getBehavior();
@@ -183,7 +209,6 @@ public class JaylenDungeon <E> extends JaylenDaisyChainConnector<E>
         }
         
         Scanner input = new Scanner(System.in);
-
 
         if(currentRoom.isTreasureRoom())
         {
@@ -205,6 +230,7 @@ public class JaylenDungeon <E> extends JaylenDaisyChainConnector<E>
         else if(currentRoom.isMonsterRoom())
         {
             Monster monster = generateRandomMonster(floor);
+            monster.setFloorModifier(floor);
             monster.Interact(player);
 
             System.out.println("Would you like to fight the " + monster.getMonsterName() + "?" + " Type fight to fight or run to run back to the previous room.");
@@ -225,20 +251,73 @@ public class JaylenDungeon <E> extends JaylenDaisyChainConnector<E>
         }
         else if(currentRoom.isTrapRoom())
         {
-            TrapRoom trap = new TrapRoom();
-            trap.Interact(player);
+            while(player.getHp() > 0)
+            {
+                Trap trap = generateRandomTrap();
+                trap.Interact(player);
+
+                if(trap instanceof FakeTreasure)
+                {
+                    if(input.nextLine().equals("yes"))
+                    {
+                        Random rand = new Random();
+                        int damage = rand.nextInt(5) + 1;
+                        System.out.println("You have triggered a trap. You have taken " + damage + " damage.");
+                        player.setHp(player.getHp() - damage);
+                        System.out.println("Your health is now " + player.getHp() + ".");
+
+                        dungeonFloor[location].setBehavior(emptyRoom);
+                    }
+                    else if(input.nextLine().equals("no"))
+                    {
+                        System.out.println("You have chosen not to open the chest. and moved on.");
+
+                        dungeonFloor[location].setBehavior(emptyRoom);
+                    }
+                }
+                else if(trap instanceof RiddleDoor)
+                {
+                    int tries = 0;
+
+                    while(!input.nextLine().equals("keyboard") || input.nextLine().equals("piano") || tries < 3)
+                    {
+                        if(input.nextLine().equals("keyboard") || input.nextLine().equals("piano"))
+                        {
+                            System.out.println("You have solved the riddle! You may pass through the door.");
+                            dungeonFloor[location].setBehavior(emptyRoom);
+                        }
+                        else if(tries == 3)
+                        {
+                            System.out.println("I feel kinda bad for you, so I'll let you pass through the door.");
+                            dungeonFloor[location].setBehavior(emptyRoom);
+                        }
+                        else
+                        {
+                            System.out.println("You have answered incorrectly! You have taken 5 damage.");
+                            player.setHp(player.getHp() - 5);
+                            System.out.println("Your health is now " + player.getHp() + ".");
+                            tries++;
+
+                            System.out.println("What has keys but can't open locks?");
+                            System.out.println("Type your answer: ");
+                            input.nextLine();
+                        }
+                    }
+                }
+            
+            }
+            input.close();
         }
         else
         {
             System.out.println("You have entered an empty room.");
         }
-
-        input.close();
     }
 
     
     /** 
-     * @return Treasure
+     * Generates a random treasure for the player to interact with.
+     * @return a random treasure object for the player to interact with.
      */
     public Treasure generateRandomTreasure()
     {
@@ -254,11 +333,14 @@ public class JaylenDungeon <E> extends JaylenDaisyChainConnector<E>
         else
         {
             return new MaxHpPotion();
-        }
-
-        
+        } 
     }
 
+    /**
+     * Generates a random monster for the player to interact with.
+     * @param floor
+     * @return a random monster object for the player to interact with.
+     */
     public Monster generateRandomMonster(int floor)
     {
         randomContents = rng.nextInt(1, 2);
@@ -269,6 +351,33 @@ public class JaylenDungeon <E> extends JaylenDaisyChainConnector<E>
         else
         {
             return new Zombie();
+        }
+    }
+
+    public Trap generateRandomTrap()
+    {
+        return new FakeTreasure();
+    }
+
+    public void showSurroundingRooms()
+    {
+        if(dungeonFloor[location].getNextRoom() == null)
+        {
+            dungeonFloor[location].setNextRoom(dungeonFloor[location + 1]);
+            System.out.println(dungeonFloor[location].getNextRoom().getRoomName() + " is the next room.");
+        }
+        else
+        {
+            System.out.println(dungeonFloor[location].getNextRoom().getRoomName() + " is the next room.");
+        }
+        if(dungeonFloor[location].getPreviousRoom() == null)
+        {
+            dungeonFloor[location].setPreviousRoom(dungeonFloor[location - 1]);
+            System.out.println(dungeonFloor[location].getPreviousRoom().getRoomName() + " is the previous room.");
+        }
+        else
+        {
+            System.out.println(dungeonFloor[location].getPreviousRoom().getRoomName() + " is the previous room.");
         }
     }
 
