@@ -1,3 +1,8 @@
+/**
+ * EmptyRoom is a class that implements the RoomBehavior interface and the InteractableObject interface.
+ * It is a room that has no monsters, no treasure, no traps, and is not an exit.
+ * Allows safe passage through the dungeon.
+ */
 public class EmptyRoom implements RoomBehavior, InteractableObject
 {
     public void onEnter()

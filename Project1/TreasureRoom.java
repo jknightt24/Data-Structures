@@ -1,6 +1,8 @@
 
 public class TreasureRoom implements RoomBehavior, InteractableObject
 {
+
+    @Override
     public void onEnter()
     {
         System.out.println("You have entered the treasure room.");

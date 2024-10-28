@@ -1,3 +1,7 @@
+/**
+ * Potion class that extends Treasure class. This class is used to create a potion object that can be interacted with by the player.
+ * The potion object will increase the player's health by 10 points.
+ */
 public class Potion extends Treasure
 {
     public Potion()

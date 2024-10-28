@@ -1,4 +1,8 @@
-
+/**
+ * This class represents a monster room in game
+ * It implements the RoomBehavior interface and the InteractableObject interface
+ * Whenever the player enters this room, they will encounter a monster
+ */
 public class MonsterRoom implements RoomBehavior, InteractableObject
 {
     public void onEnter()

@@ -1,3 +1,7 @@
+/**
+ * MaxHpPotion is a class that extends the Treasure class. 
+ * It is a type of treasure that increases the player's max health by 5 and heals the player by 5 health points when interacted with.
+ */
 public class MaxHpPotion extends Treasure
 {
     public MaxHpPotion()

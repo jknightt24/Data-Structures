@@ -1,4 +1,8 @@
-
+/**
+ * FakeTreasure is a subclass of Trap. It is a trap that is disguised as a treasure chest. 
+ * When the player interacts with it, the player is asked if they want to open the chest. 
+ * If the player chooses to open the chest, they will recieve damage.
+ */
 public class FakeTreasure extends Trap
 {
     public FakeTreasure()

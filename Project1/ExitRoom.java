@@ -1,3 +1,8 @@
+/**
+ * exit room class that implements the room behavior interface
+ * this is the final room of any floor
+ * it is the room that the player must reach to exit the floor and proceed to the next
+ */
 public class ExitRoom implements RoomBehavior
 {
     public void onEnter()

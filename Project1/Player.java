@@ -1,3 +1,6 @@
+/**
+ * Player class that contains the player's stats and battle calculations
+ */
 import java.util.Random;
 
 public class Player

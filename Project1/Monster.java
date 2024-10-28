@@ -1,3 +1,10 @@
+/**
+ * Monster class that is used to create a framework of monsters for the player to fight against.
+ * The monsters have a name, attack, hp, defense, and speed.
+ * The monsters can be modified by the floor they are on. and get stronger the higher the floors go.
+ * The monsters can attack the player and reduce the player's hp.
+ * 
+ */
 import java.util.Random;
 
 public abstract class Monster implements InteractableObject

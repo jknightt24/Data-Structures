@@ -354,11 +354,18 @@ public class JaylenDungeon <E> extends JaylenDaisyChainConnector<E>
         }
     }
 
+    /**
+     * Generates a random trap for the player to interact with.
+     * @return a random trap object for the player to interact with.
+     */
     public Trap generateRandomTrap()
     {
         return new FakeTreasure();
     }
 
+    /**
+     * Shows the player the rooms surrounding the room they are currently in.
+     */
     public void showSurroundingRooms()
     {
         if(dungeonFloor[location].getNextRoom() == null)
