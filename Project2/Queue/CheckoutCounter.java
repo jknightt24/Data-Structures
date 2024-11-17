@@ -122,36 +122,58 @@ public class CheckoutCounter
         }
     }
 
+    /**Gets the average wait time
+     * @return avgWait
+     */
     public double getAvgWait()
     {
         return avgWait;
     }
 
+    /**Gets the superexpress line
+     * @return superexpress
+     */
     public CustomerQueue getSuperexpress()
     {
         return superexpress;
     }
 
+    /**Gets the first express line
+     * @return express1
+     */
     public CustomerQueue getExpress1()
     {
         return express1;
     }
 
+    /**Gets the second express line
+     * @return express2
+     */
     public CustomerQueue getExpress2()
     {
         return express2;
     }
 
+    /**Gets the standard line at index i
+     * @param i
+     * @return stand[i]
+     */
     public CustomerQueue getStand(int i)
     {
         return stand[i];
     }
 
+    /**Gets the number of standard lines
+     * @return numStandLines
+     */
     public int getNumStandLines()
     {
         return numStandLines;
     }
 
+    /**Gets the total wait time for all standard lines
+     * @return totalWait
+     */
     public double getStandTotalWait()
     {
         double total = 0;
@@ -162,6 +184,9 @@ public class CheckoutCounter
         return total;
     }
 
+    /**Gets the total number of customers in the standard lines
+     * @return total
+     */
     public int getStandTotalCustomers()
     {
         int total = 0;
@@ -172,11 +197,17 @@ public class CheckoutCounter
         return total;
     }
 
+    /**Gets the total number of customers in all lines
+     * @return total
+     */
     public int getTotalCustomers()
     {
         return superexpress.getNumServed() + express1.getNumServed() + express2.getNumServed() + getStandTotalCustomers();
     }
 
+    /**Gets the maximum number of customers any line had
+     * @return total
+     */
     public int getMaxCustomers()
     {
         int max = superexpress.getMaxCustomers();
@@ -198,6 +229,9 @@ public class CheckoutCounter
         return max;
     }
 
+    /**Gets the total number of items processed in the standard lines
+     * @return total
+     */
     public int getStandTotalItems()
     {
         int total = 0;

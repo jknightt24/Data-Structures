@@ -7,6 +7,17 @@ public class QueueLab
     private int maxTime;
     private int maxItems;
 
+    /**
+     * Constructor for the QueueLab counter
+     * takes in the number of items for the Superexpress line, the number of items for the Express lines, the number of standard lines, and the arrival rate
+     * also takes in the maximum number of items a customer can have and the maximum simulation time
+     * @param numSuper
+     * @param numExp
+     * @param numStandLines
+     * @param arrivalRate
+     * @param maxItems
+     * @param maxTime
+     */
     public void enterData()
     {
         int numSuper = Integer.parseInt(JOptionPane.showInputDialog("Enter the number of items for the Superexpress line"));
@@ -19,6 +30,11 @@ public class QueueLab
         maxTime = Integer.parseInt(JOptionPane.showInputDialog("Enter the maximum simulation time"));
     }   
 
+    /**
+     * Method to run the simulation
+     * increments the time by 1 and checks if a new customer arrives
+     * stops when the time reaches the maximum time
+     */
     public void runSimulation()
     {
         double time = 0;
@@ -29,6 +45,16 @@ public class QueueLab
         }
     }
 
+    /**
+     * Method to print the results of the simulation
+     * prints the average wait time for each line, 
+     * the maximum length of each line, 
+     * the number of customers per hour in each line, 
+     * the number of items processed per hour in each line, 
+     * the total number of items processed, 
+     * the average free time for each line, 
+     * and the total free time
+     */
     public void printResults()
     {
         System.out.println("The average wait time for the Superexpress line is " + counter.getSuperexpress().getTotalWait() / counter.getSuperexpress().getNumServed());
