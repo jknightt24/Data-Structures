@@ -4,7 +4,7 @@ public class JaylenContainerTester
 {
     public static void main(String[] args)
     {
-        JaylenContainer data = new JaylenContainer();
+        JaylenContainer<Integer> data = new JaylenContainer<Integer>();
         
         System.out.println(data);
         System.out.println(data.size());

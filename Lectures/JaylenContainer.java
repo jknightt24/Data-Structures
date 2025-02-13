@@ -1,14 +1,19 @@
-import java.util.Arrays;
-
-public class JaylenContainer
+public class JaylenContainer <T>
 {
-    
+    private T type;
     private int[] data = new int[10];
     private int size;
-    private boolean containes;
-    private int numbers;
-    
 
+    public T getType()
+    {
+        return type;
+    }
+
+    public void setType(T type)
+    {
+        this.type = type;
+    }
+    
     public void biggerArray()
     {
         int[] temp = new int[data.length * 2];
@@ -22,7 +27,7 @@ public class JaylenContainer
     }
 
     
-    public void add(Integer currentPosition, int value)
+    public void add(Integer currentPosition, T value)
     {
         size = data.length;
 
@@ -40,7 +45,7 @@ public class JaylenContainer
         data[currentPosition] = value;
     }
 
-    public void addFirst(int value)
+    public void addFirst(T value)
     {
         biggerArray();
 
@@ -80,7 +85,7 @@ public class JaylenContainer
         }
     }
 
-    public void replaceValue(int currentPosition, int value)
+    public void replaceValue(int currentPosition, T value)
     {
         data[currentPosition] = value;
     }
@@ -125,7 +130,7 @@ public class JaylenContainer
         return sb.toString();
     }
 
-    public boolean containes(int value, boolean containes)
+    public boolean containes(T value, boolean containes)
     {
         for(int i = 0; i < data.length; i++)
         {
